@@ -61,9 +61,9 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
 
     letras = "ABCDEFGHIJ"
     for indice in range(10):
-        texto_letra = fonte_pequena.render(letras[indice], True, cor_texto)
+        texto_letra = fonte_pequena.render(letras[indice], True, 'black')
         tela_jogo.blit(texto_letra, (40 + indice * 52 + (52 - texto_letra.get_width()) // 2, 18))
-        texto_numero = fonte_pequena.render(str(indice + 1), True, cor_texto)
+        texto_numero = fonte_pequena.render(str(indice + 1), True, 'black')
         tela_jogo.blit(texto_numero, (15, 40 + indice * 52 + (52 - texto_numero.get_height()) // 2))
 
 
