@@ -1,0 +1,13 @@
+# Virtual environment
+.venv/
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# editor files
+.vscode/
+
+# PDF
+*.pdf
