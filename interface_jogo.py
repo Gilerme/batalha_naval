@@ -27,7 +27,7 @@ def tocar_som(sons_jogo, chave_som):
     sons_jogo[chave_som].play() # acessa o som correspondente à chave fornecida (chave_som) no dicionário sons_jogo e reproduz o som usando o método play().
 
 
-def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=False, celula_hover=None):
+def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=False, celula_ativa=None):
     cor_agua = ('blue')
     cor_navio = ('green')
     cor_acerto = ('red')
@@ -54,8 +54,8 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
 
             pygame.draw.rect(tela_jogo, cor_borda, retangulo, 1)
 
-    if celula_hover and not esconder:
-        coluna_hover, linha_hover = celula_hover
+    if celula_ativa and not esconder:
+        coluna_hover, linha_hover = celula_ativa
         for coluna in range(coluna_hover, min(coluna_hover + 3, 10)):
             pygame.draw.rect(tela_jogo, (cor_texto), (40 + coluna * 52, 40 + linha_hover * 52, 52, 52), 2)
 
