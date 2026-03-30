@@ -55,9 +55,9 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
             pygame.draw.rect(tela_jogo, cor_borda, retangulo, 1)
 
     if celula_ativa and not esconder:
-        coluna_hover, linha_hover = celula_ativa
-        for coluna in range(coluna_hover, min(coluna_hover + 3, 10)):
-            pygame.draw.rect(tela_jogo, (cor_texto), (40 + coluna * 52, 40 + linha_hover * 52, 52, 52), 2)
+        coluna_ativa, linha_ativa = celula_ativa
+        for coluna in range(coluna_ativa, min(coluna_ativa + 3, 10)):
+            pygame.draw.rect(tela_jogo, (cor_texto), (40 + coluna * 52, 40 + linha_ativa * 52, 52, 52), 2)
 
     letras = "ABCDEFGHIJ"
     for indice in range(10):
