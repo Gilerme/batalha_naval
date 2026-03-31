@@ -31,6 +31,8 @@ batalha_naval/
 Define todas as operações matemáticas e lógicas relacionadas ao tabuleiro.
 
 #### `novo_tabuleiro()`
+Cria um tabuleiro zerado uma matriz 10x10 onde `0` significa água e os números `1` a `7` identificam cada navio.
+
 - **Retorna:** Matriz 10x10 preenchida com zeros
 - **Função:** Cria um tabuleiro vazio
 - **Representação:** 
@@ -45,6 +47,9 @@ tabuleiro = [[0, 0, 0, ..., 0],
 ```
 
 #### `celula_do_mouse(mouse_x, mouse_y)`
+Transforma a posição do cursor (em pixels) numa célula do tabuleiro (coluna, linha). O tabuleiro começa no pixel (40, 40) e cada célula tem 52×52 px, retorna a coordenada`(coluna, linha)` ou `None` se o mouse estiver fora do tabuleiro.
+
+
 - **Entrada:** Coordenadas x, y do mouse (pixels)
 - **Saída:** Tupla (coluna, linha) ou None
 - **Função:** Converte coordenadas de pixel em índices do tabuleiro
@@ -55,6 +60,8 @@ tabuleiro = [[0, 0, 0, ..., 0],
   - Valida se está dentro dos limites [0-9]
 
 #### `pode_colocar(tabuleiro, coluna, linha)`
+Antes de confirmar a posição de um navio, esta função verifica duas coisas: se o navio de 3 células cabe horizontalmente a partir daquela coluna, e se todas as células estão livres. Retorna `True` ou `False`.
+
 - **Entrada:** Tabuleiro, coluna, linha de início
 - **Saída:** Boolean
 - **Verificações:**
@@ -63,6 +70,8 @@ tabuleiro = [[0, 0, 0, ..., 0],
 - **Retorna:** `True` se posição é válida, `False` caso contrário
 
 #### `coloca_navio(tabuleiro, coluna, linha, id_navio)`
+Coloca o navio no tabuleiro preenchendo 3 células consecutivas com o ID do navio (de `1` a `7`, na ordem em que foram posicionados).
+
 - **Entrada:** Tabuleiro, posição, ID do navio (1-7)
 - **Ação:** Preenche 3 células consecutivas com o ID do navio
 - **Direção:** Horizontal (mesmo linha, colunas consecutivas)
@@ -74,6 +83,8 @@ tabuleiro = [[0, 0, 0, ..., 0],
 ```
 
 #### `aplicar_tiro(tabuleiro, tiros_jogador, coluna, linha)`
+Executa um tiro. Se a célula for água (`0`), o tiro é registrado e retorna `False`. Se for navio, registra o acerto e verifica se **todas as 3 células** daquele navio foram atingidas só então retorna `True` (navio destruído).
+
 - **Entrada:** Tabuleiro adversário, lista de tiros, coordenadas do tiro
 - **Saída:** Boolean (True = destruiu navio, False = errou)
 - **Lógica:**
@@ -85,12 +96,16 @@ tabuleiro = [[0, 0, 0, ..., 0],
 - **Adição:** Tiro é adicionado à lista `tiros_jogador` como tupla (coluna, linha)
 
 #### `todos_destruidos(tabuleiro, tiros_jogador)`
+Percorre o tabuleiro inteiro procurando alguma célula de navio que ainda não foi atingida. Se não encontrar nenhuma, retorna `True` um fim de jogo.
+
 - **Entrada:** Tabuleiro, lista de tiros
 - **Saída:** Boolean
 - **Lógica:** Percorre todo o tabuleiro procurando por uma célula de navio não atingida
 - **Retorna:** `True` se TODOS os navios foram destruídos (todos atingidos)
 
 #### `contar_destruidos(tabuleiro, tiros_jogador)`
+Conta quantos navios já foram completamente destruídos. Usa um `set` para não contar o mesmo navio mais de uma vez. Retorna um número de `0` a `7`.
+
 - **Entrada:** Tabuleiro, lista de tiros
 - **Saída:** Inteiro (número de navios destruídos)
 - **Lógica:**
@@ -103,7 +118,7 @@ tabuleiro = [[0, 0, 0, ..., 0],
 
 ### 2. **interface_jogo.py** - Interface Gráfica
 
-Gerencia toda a renderização visual e áudio.
+Gerencia toda a renderização visual(formas e imagens) e áudio.
 
 #### `criar_janela()`
 - **Função:** Inicializa Pygame e cria a janela do jogo
