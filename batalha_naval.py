@@ -149,7 +149,8 @@ def main():
         elif estado_jogo == "batalha1":
             desenhar_grade(tela_jogo, fonte_pequena, tabuleiro_player2, tiros_player1, True) # Desenha a grade do jogo para o jogador 1, mostrando os tiros do jogador 1 no tabuleiro do jogador 2, e destacando as células onde o jogador 1 pode atirar
             navios_destruidos = contar_destruidos(tabuleiro_player2, tiros_player1) # Conta quantos navios do jogador 2 foram destruídos pelos tiros do jogador 1, usando a função contar_destruidos que verifica o tabuleiro do jogador 2 e os tiros do jogador 1 para calcular o número de navios destruídos
-            desenhar_info(tela_jogo, fonte_media, f"Jogador 1 ataca! Navios destruidos: {navios_destruidos}/7") # Desenha a mensagem de informação para o jogador 1, mostrando quantos navios do jogador 2 foram destruídos pelos tiros do jogador 1, e quantos navios ainda restam para serem destruídos
+            mensagem_info = f"Jogador 1 ataca! Navios destruidos: {navios_destruidos}/7"
+            desenhar_info(tela_jogo, fonte_media, mensagem_info) # Desenha a mensagem de informação para o jogador 1, mostrando quantos navios do jogador 2 foram destruídos pelos tiros do jogador 1, e quantos navios ainda restam para serem destruídos
 
         elif estado_jogo == "trans_2":
             mensagem(tela_jogo, fonte_media, fonte_grande, "Agua!", "Vez do Jogador 2", "Continuar") # Exibe uma mensagem de transição para o jogador 2, indicando que o jogador 1 errou e que é a vez do jogador 2 atacar
@@ -157,7 +158,8 @@ def main():
         elif estado_jogo == "batalha2":
             desenhar_grade(tela_jogo, fonte_pequena, tabuleiro_player1, tiros_player2, True)
             navios_destruidos = contar_destruidos(tabuleiro_player1, tiros_player2)
-            desenhar_info(tela_jogo, fonte_media, f"Jogador 2 ataca! Navios destruidos: {navios_destruidos}/7") # Mesma coisa para o jogador 2, desenha a grade do jogo para o jogador 2, mostrando os tiros do jogador 2 no tabuleiro do jogador 1, e destacando as células onde o jogador 2 pode atirar. Também exibe a mensagem de informação para o jogador 2, mostrando quantos navios do jogador 1 foram destruídos pelos tiros do jogador 2, e quantos navios ainda restam para serem destruídos
+            mensagem_info = f"Jogador 2 ataca! Navios destruidos: {navios_destruidos}/7"
+            desenhar_info(tela_jogo, fonte_media, mensagem_info) # Mesma coisa para o jogador 2, desenha a grade do jogo para o jogador 2, mostrando os tiros do jogador 2 no tabuleiro do jogador 1, e destacando as células onde o jogador 2 pode atirar. Também exibe a mensagem de informação para o jogador 2, mostrando quantos navios do jogador 1 foram destruídos pelos tiros do jogador 2, e quantos navios ainda restam para serem destruídos
 
         elif estado_jogo == "trans_1":
             mensagem(tela_jogo, fonte_media, fonte_grande, "Agua!", "Vez do Jogador 1", "Continuar") # Exibe uma mensagem de transição para o jogador 1, indicando que o jogador 2 errou e que é a vez do jogador 1 atacar
