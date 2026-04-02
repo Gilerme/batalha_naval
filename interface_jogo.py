@@ -85,7 +85,7 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
                 pos_x = 40 + coluna * 52
                 pos_y = 40 + linha_ativa * 52
                 tela_jogo.blit(imagem_barco[parte], (pos_x, pos_y))
-                pygame.draw.rect(tela_jogo, cor_texto, (pos_x, pos_y, 52, 52), 2)
+                pygame.draw.rect(tela_jogo, "white", (pos_x, pos_y, 52, 52), 2)
 
     letras = "ABCDEFGHIJ"
     for indice in range(10):
