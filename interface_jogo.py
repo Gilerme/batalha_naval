@@ -18,7 +18,9 @@ def carregar_sons():
 
     pygame.mixer.init()
     sons_jogo["acerto"] = pygame.mixer.Sound("./sons/acertou.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["acerto"], 0.2) # define o volume do som para 20% do volume maximo
     sons_jogo["erro"] = pygame.mixer.Sound("./sons/agua.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["erro"], 0.2)
     # inicializa o mixer de áudio do Pygame e carrega os arquivos de som "acertou.mp3" e "agua.mp3" para as chaves "acerto" e "erro" do dicionário sons_jogo, respectivamente.
     return sons_jogo
 
