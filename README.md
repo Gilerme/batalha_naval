@@ -10,7 +10,7 @@ O jogo simula a batalha naval tradicional onde dois jogadores, alternadamente, t
 
 ---
 
-## O que é preciso em um jogo de Batalha Naval?
+## O que é preciso nesse jogo de Batalha Naval?
 
 ### Requisitos
 - Dois tabuleiros (um para cada jogador)
