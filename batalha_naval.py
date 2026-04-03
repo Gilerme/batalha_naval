@@ -15,13 +15,17 @@ from interface_jogo import (
     desenhar_info,
     mensagem,
     tocar_som,
-    tela_vitoria
+    tela_vitoria,
+    tela_inicial
 )
 
 def main():
     tela_jogo, relogio_jogo, fonte_pequena, fonte_media, fonte_grande, sons_jogo = criar_janela() # Configura a janela do jogo e os recursos necessários
 
-    estado_jogo = "setup1"
+    estado_jogo = "tela_inicial" # Define o estado inicial do jogo, que é a tela de início onde os jogadores podem escolher iniciar o jogo
+    tocar_som(sons_jogo, "trilha", -1) # Inicia a reprodução do som de trilha sonora em loop, usando a função tocar_som para acessar o som correspondente à chave "trilha" no dicionário sons_jogo e reproduzi-lo indefinidamente (loop=-1)
+    tocar_som(sons_jogo, "mar", -1) # Inicia a reprodução do som de mar em loop, usando a função tocar_som para acessar o som correspondente à chave "mar" no dicionário sons_jogo e reproduzi-lo indefinidamente (loop=-1)
+    tocar_som(sons_jogo, "guerra", -1) # Inicia a reprodução do som de guerra em loop, usando a função tocar_som para acessar o som correspondente à chave "guerra" no dicionário sons_jogo e reproduzi-lo indefinidamente (loop=-1)
     tabuleiro_player1 = novo_tabuleiro()
     tabuleiro_player2 = novo_tabuleiro()
     tiros_player1 = []
@@ -29,6 +33,7 @@ def main():
     navios_colocados_player1 = 0
     navios_colocados_player2 = 0
     jogador_vencedor = 0
+    som_vitoria_tocado = False
     # inicializacao das variaveis para estado inicial do jogo
 
     while True:
@@ -39,14 +44,18 @@ def main():
                 pygame.quit()
                 sys.exit() # Encerra o jogo quando a janela é fechada
 
-            if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1: # Verifica se o botão esquerdo do mouse foi clicado 
-                if estado_jogo == "setup1":
+            elif evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1: # Verifica se o botão esquerdo do mouse foi clicado 
+                if estado_jogo == "tela_inicial":
+                    estado_jogo = "setup1" # Se o jogo estiver na tela inicial e o jogador clicar, muda o estado do jogo para o setup do jogador 1, onde ele pode começar a colocar seus navios no tabuleiro
+                
+                elif estado_jogo == "setup1":
                     celula = celula_do_mouse(mouse_x, mouse_y) # Converte a posição do mouse para coordenadas da grade do jogo
                     if celula and navios_colocados_player1 < 7: # Verifica se a célula é válida e se o jogador ainda pode colocar navios
                         coluna, linha = celula # separa as coordenadas para coluna e linha
                         if pode_colocar(tabuleiro_player1, coluna, linha): # Verifica se é possível colocar um navio usando o tabuleiro do jogador 1, a coluna e linha selecionadas
                             navios_colocados_player1 += 1 # aumenta o numero de navios colocados para o jogador 1
                             coloca_navio(tabuleiro_player1, coluna, linha, navios_colocados_player1) # registra o navio no tabuleiro do jogador 1, passando o tabuleiro, coluna, linha e o navio colocado no momento
+                            tocar_som(sons_jogo, "colocou") # Toca o som de colocar navio usando a função tocar_som para acessar o som correspondente à chave "colocou" no dicionário sons_jogo e reproduzi-lo
                             if navios_colocados_player1 == 7:
                                 estado_jogo = "trans_p2" # Se o jogador 1 tiver colocado os 7 navios, muda o estado do jogo para a transição para o jogador 2
 
@@ -60,6 +69,7 @@ def main():
                         if pode_colocar(tabuleiro_player2, coluna, linha):
                             navios_colocados_player2 += 1
                             coloca_navio(tabuleiro_player2, coluna, linha, navios_colocados_player2)
+                            tocar_som(sons_jogo, "colocou")
                             if navios_colocados_player2 == 7:
                                 estado_jogo = "trans_batalha" # mesma coisa para o jogador 2, quando ele colocar os 7 navios, muda o estado do jogo para a transição para a batalha
 
@@ -101,7 +111,12 @@ def main():
                     estado_jogo = "batalha1"
 
                 elif estado_jogo == "vitoria":
-                    estado_jogo = "setup1"
+                    estado_jogo = "tela_inicial"
+                    sons_jogo["vitoria"].stop() # Para o som de vitória usando a função stop() para acessar o som correspondente à chave "vitoria" no dicionário sons_jogo e parar a reprodução do som  
+                    som_vitoria_tocado = False
+                    tocar_som(sons_jogo, "trilha", -1)
+                    tocar_som(sons_jogo, "mar", -1)
+                    tocar_som(sons_jogo, "guerra", -1)
                     tabuleiro_player1 = novo_tabuleiro()
                     tabuleiro_player2 = novo_tabuleiro()
                     tiros_player1 = []
@@ -109,10 +124,21 @@ def main():
                     navios_colocados_player1 = 0
                     navios_colocados_player2 = 0
                     jogador_vencedor = 0 # Se o jogo estiver na tela de vitória e o jogador clicar, reinicia o jogo para o estado inicial
-
+                    
         tela_jogo.fill('darkgray') # Limpa a tela do jogo com uma cor de fundo
 
-        if estado_jogo == "setup1":
+        # Toca o som de vitória uma única vez ao entrar no estado
+        if estado_jogo == "vitoria" and not som_vitoria_tocado:
+            sons_jogo["trilha"].stop()
+            sons_jogo["mar"].stop()
+            sons_jogo["guerra"].stop()
+            tocar_som(sons_jogo, "vitoria")
+            som_vitoria_tocado = True
+
+        if estado_jogo == "tela_inicial":
+            tela_inicial(tela_jogo, fonte_media, fonte_grande) # Desenha a tela inicial do jogo, onde os jogadores podem escolher iniciar o jogo
+        
+        elif estado_jogo == "setup1":
             celula = celula_do_mouse(mouse_x, mouse_y)
             if celula:
                 coluna, linha = celula

@@ -14,19 +14,36 @@ def criar_janela():
 
 
 def carregar_sons():
-    sons_jogo = {"acerto": None, "erro": None} # cria um dicionário para armazenar os sons do jogo, onde as chaves são "acerto" e "erro". Inicialmente, os valores são definidos como None, indicando que os sons ainda não foram carregados. O dicionário é usado para organizar e acessar facilmente os sons do jogo com base em suas chaves correspondentes.
+    sons_jogo = {"acerto": None,
+                 "erro": None,
+                 "trilha": None,
+                 "guerra": None,
+                 "mar": None,
+                 "colocou": None,
+                 "vitoria": None} # cria um dicionário para armazenar os sons do jogo, onde as chaves são "acerto" e "erro". Inicialmente, os valores são definidos como None, indicando que os sons ainda não foram carregados. O dicionário é usado para organizar e acessar facilmente os sons do jogo com base em suas chaves correspondentes.
 
     pygame.mixer.init()
     sons_jogo["acerto"] = pygame.mixer.Sound("./sons/acertou.mp3")
-    pygame.mixer.Sound.set_volume(sons_jogo["acerto"], 0.2) # define o volume do som para 20% do volume maximo
+    pygame.mixer.Sound.set_volume(sons_jogo["acerto"], 0.4) # define o volume do som para 20% do volume maximo
     sons_jogo["erro"] = pygame.mixer.Sound("./sons/agua.mp3")
-    pygame.mixer.Sound.set_volume(sons_jogo["erro"], 0.2)
+    pygame.mixer.Sound.set_volume(sons_jogo["erro"], 0.8)
+    sons_jogo["trilha"] = pygame.mixer.Sound("./sons/trilha.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["trilha"], 0.2)
+    sons_jogo["mar"] = pygame.mixer.Sound("./sons/mar.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["mar"], 0.4)
+    sons_jogo["colocou"] = pygame.mixer.Sound("./sons/radar.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["colocou"], 0.5)
+    sons_jogo["vitoria"] = pygame.mixer.Sound("./sons/vitoria.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["vitoria"], 0.6)
+    sons_jogo["guerra"] = pygame.mixer.Sound("./sons/war.mp3")
+    pygame.mixer.Sound.set_volume(sons_jogo["guerra"], 0.1)
+
     # inicializa o mixer de áudio do Pygame e carrega os arquivos de som "acertou.mp3" e "agua.mp3" para as chaves "acerto" e "erro" do dicionário sons_jogo, respectivamente.
     return sons_jogo
 
 
-def tocar_som(sons_jogo, chave_som):
-    sons_jogo[chave_som].play() # acessa o som correspondente à chave fornecida (chave_som) no dicionário sons_jogo e reproduz o som usando o método play().
+def tocar_som(sons_jogo, chave_som, loop=0):
+    sons_jogo[chave_som].play(loop) # acessa o som correspondente à chave fornecida (chave_som) no dicionário sons_jogo e reproduz o som usando o método play().
 
 
 def obter_parte_navio(tabuleiro, coluna, linha):
@@ -50,8 +67,12 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
     cor_erro = "gray"
     cor_borda = "black"
     cor_texto = "white"
-    imagem_barco = {1: pygame.image.load("./imagens/barco_1.png").convert_alpha(), 2: pygame.image.load("./imagens/barco_2.png").convert_alpha(), 3: pygame.image.load("./imagens/barco_3.png").convert_alpha()}
-    imagem_barco_destruido = {1: pygame.image.load("./imagens/barco_destruido_1.png").convert_alpha(), 2: pygame.image.load("./imagens/barco_destruido_2.png").convert_alpha(), 3: pygame.image.load("./imagens/barco_destruido_3.png").convert_alpha()}
+    imagem_barco = {1: pygame.image.load("./imagens/barco_1.png").convert_alpha(),
+                    2: pygame.image.load("./imagens/barco_2.png").convert_alpha(),
+                    3: pygame.image.load("./imagens/barco_3.png").convert_alpha()}
+    imagem_barco_destruido = {1: pygame.image.load("./imagens/barco_destruido_1.png").convert_alpha(),
+                              2: pygame.image.load("./imagens/barco_destruido_2.png").convert_alpha(), 
+                              3: pygame.image.load("./imagens/barco_destruido_3.png").convert_alpha()}
 
     for linha in range(10):
         for coluna in range(10):
@@ -127,3 +148,10 @@ def tela_vitoria(tela_jogo, fonte_media, fonte_grande, jogador_vencedor):
     tela_jogo.blit(texto_titulo, (300 - texto_titulo.get_width() // 2, 250))
     tela_jogo.blit(texto_subtitulo, (300 - texto_subtitulo.get_width() // 2, 320))
     botao(tela_jogo, fonte_media, "Jogar Novamente", 170, 390)
+    
+
+def tela_inicial(tela_jogo, fonte_media, fonte_grande):
+    tela_jogo.fill("black")
+    texto_titulo = fonte_grande.render("Batalha Naval", True, "white")
+    tela_jogo.blit(texto_titulo, (300 - texto_titulo.get_width() // 2, 250))
+    botao(tela_jogo, fonte_media, "Iniciar Jogo", 170, 350)
