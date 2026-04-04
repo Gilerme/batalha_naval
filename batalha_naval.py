@@ -19,6 +19,7 @@ from interface_jogo import (
     tela_inicial
 )
 
+
 def main():
     tela_jogo, relogio_jogo, fonte_pequena, fonte_media, fonte_grande, sons_jogo = criar_janela()
 
