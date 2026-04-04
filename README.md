@@ -10,6 +10,41 @@ O jogo simula a batalha naval tradicional onde dois jogadores, alternadamente, t
 
 ---
 
+## O que é preciso nesse jogo de Batalha Naval?
+
+### Requisitos
+- Dois tabuleiros (um para cada jogador)
+- 7 navios (para cada jogador)
+- Cada navio ocupa 3 células (quadrados) apenas na horizontal
+- O navio só poderá ser colocado em locais válidos, ou seja, sem navio ou que tenha espaço para 3 células posteriores
+- Ao acertar um tiro em alguma célula de um navio, todo o navio é destruído
+- O jogador não pode atirar no mesmo lugar mais de uma vez
+- O acerto ou erro do tiro deve produzir feedbacks visuais e sonoros distintos
+- O tabuleiro esconde os barcos do adversário
+- Vence quem destruir todos os navios do adversário primeiro
+
+### Lógica
+- Criar tabuleiro
+- Verificar posição do mouse no tabuleiro
+- Verificar se é possível colocar um navio em determinada posição no tabuleiro
+- Efetivamente registrar o navio em uma posição
+- Tentar um tiro e verificar o resultado (se acertou um navio ou não)
+- Verificar quantos navios já foram destruídos
+- Verificar se todos os navios já foram destruídos
+
+### Telas/Estados
+- Tela de posicionamento dos navios para o Jogador 1
+- Tela de transição para o Jogador 2
+- Tela de posicionamento dos navios para o Jogador 2
+- Tela de transição para a batalha (começa com o Jogador 1)
+- Tela de batalha: vez do Jogador 1
+- Tela de transição para o Jogador 2
+- Tela de batalha: vez do Jogador 2
+- Tela de transição para o Jogador 1
+- Tela de vitória
+
+---
+
 ## Estrutura do Projeto
 
 ```
