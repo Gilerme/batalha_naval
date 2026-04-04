@@ -147,13 +147,16 @@ def main():
             mensagem_info = f"Jogador 1: navio {navios_colocados_player1 + 1}/7"
             if celula:
                 if posicao_valida:
-                    mensagem_info += " (valido)"
+                    mensagem_info += " (Posição válida)"
                 else:
-                    mensagem_info += " (invalido)"
+                    mensagem_info += " (Posição inválida)"
             desenhar_info(tela_jogo, fonte_media, mensagem_info) # Desenha a mensagem de informação para o jogador 1, mostrando quantos navios foram colocados e se a posição atual do mouse é válida para colocar um navio ou não
 
         elif estado_jogo == "trans_p2":
-            mensagem(tela_jogo, fonte_media, fonte_grande, "Jogador 1 esta pronto!", "Passe o computador ao Jogador 2", "Continuar") # Exibe uma mensagem de transição para o jogador 2, indicando que o jogador 1 está pronto e que o computador deve ser passado para o jogador 2
+            titulo = "Jogador 1 está pronto!"
+            subtitulo = "Passe o computador para o Jogador 2"
+            texto_botao = "Continuar"
+            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao) # Exibe uma mensagem de transição para o jogador 2, indicando que o jogador 1 está pronto e que o computador deve ser passado para o jogador 2
 
         elif estado_jogo == "setup2":
             celula = celula_do_mouse(mouse_x, mouse_y)
@@ -164,13 +167,16 @@ def main():
             mensagem_info = f"Jogador 2: navio {navios_colocados_player2 + 1}/7"
             if celula:
                 if posicao_valida:
-                    mensagem_info += " (valido)"
+                    mensagem_info += " (Posição válida)"
                 else:
-                    mensagem_info += " (invalido)" 
+                    mensagem_info += " (Posição inválida)" 
             desenhar_info(tela_jogo, fonte_media, mensagem_info) # Mesma coisa para o jogador 2, desenha a grade do jogo para o jogador 2 e exibe a mensagem de informação mostrando quantos navios foram colocados e se a posição atual do mouse é válida para colocar um navio ou não
 
         elif estado_jogo == "trans_batalha":
-            mensagem(tela_jogo, fonte_media, fonte_grande, "Batalha vai comecar!", "Jogador 1 ataca primeiro", "Iniciar") # Exibe uma mensagem de transição para a batalha
+            titulo = "Batalha vai começar!"
+            subtitulo = "Jogador 1 ataca primeiro"
+            texto_botao = "Iniciar"
+            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao) # Exibe uma mensagem de transição para a batalha
 
         elif estado_jogo == "batalha1":
             desenhar_grade(tela_jogo, fonte_pequena, tabuleiro_player2, tiros_player1, True) # Desenha a grade do jogo para o jogador 1, mostrando os tiros do jogador 1 no tabuleiro do jogador 2, e destacando as células onde o jogador 1 pode atirar
@@ -179,7 +185,10 @@ def main():
             desenhar_info(tela_jogo, fonte_media, mensagem_info) # Desenha a mensagem de informação para o jogador 1, mostrando quantos navios do jogador 2 foram destruídos pelos tiros do jogador 1, e quantos navios ainda restam para serem destruídos
 
         elif estado_jogo == "trans_2":
-            mensagem(tela_jogo, fonte_media, fonte_grande, "Agua!", "Vez do Jogador 2", "Continuar") # Exibe uma mensagem de transição para o jogador 2, indicando que o jogador 1 errou e que é a vez do jogador 2 atacar
+            titulo = "Água!"
+            subtitulo = "Vez do Jogador 2"
+            texto_botao = "Continuar"
+            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao) # Exibe uma mensagem de transição para o jogador 2, indicando que o jogador 1 errou e que é a vez do jogador 2 atacar
 
         elif estado_jogo == "batalha2":
             desenhar_grade(tela_jogo, fonte_pequena, tabuleiro_player1, tiros_player2, True)
@@ -188,7 +197,10 @@ def main():
             desenhar_info(tela_jogo, fonte_media, mensagem_info) # Mesma coisa para o jogador 2, desenha a grade do jogo para o jogador 2, mostrando os tiros do jogador 2 no tabuleiro do jogador 1, e destacando as células onde o jogador 2 pode atirar. Também exibe a mensagem de informação para o jogador 2, mostrando quantos navios do jogador 1 foram destruídos pelos tiros do jogador 2, e quantos navios ainda restam para serem destruídos
 
         elif estado_jogo == "trans_1":
-            mensagem(tela_jogo, fonte_media, fonte_grande, "Agua!", "Vez do Jogador 1", "Continuar") # Exibe uma mensagem de transição para o jogador 1, indicando que o jogador 2 errou e que é a vez do jogador 1 atacar
+            titulo = "Água!"
+            subtitulo = "Vez do Jogador 1"
+            texto_botao = "Continuar"
+            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao) # Exibe uma mensagem de transição para o jogador 1, indicando que o jogador 2 errou e que é a vez do jogador 1 atacar
 
         elif estado_jogo == "vitoria":
             tela_vitoria(tela_jogo, fonte_media, fonte_grande, jogador_vencedor) # Exibe a tela de vitória, indicando qual jogador venceu o jogo
