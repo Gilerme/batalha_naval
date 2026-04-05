@@ -59,12 +59,12 @@ def obter_parte_navio(tabuleiro, coluna, linha):
 
 
 def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=False, celula_ativa=None):
-    cor_agua = "blue"
-    cor_navio = "green"
-    cor_acerto = "red"
-    cor_erro = "gray"
-    cor_borda = "black"
-    cor_texto = "white"
+    cor_agua = (9, 36, 59)
+    cor_navio = (253, 166, 0)
+    cor_acerto = (162, 26, 3)
+    cor_erro = (8, 6, 20)
+    cor_borda = (0, 0, 0)
+    cor_texto = (224, 243, 247)
     imagem_barco = {1: pygame.image.load("./imagens/barco_1.png").convert_alpha(),
                     2: pygame.image.load("./imagens/barco_2.png").convert_alpha(),
                     3: pygame.image.load("./imagens/barco_3.png").convert_alpha()}
@@ -103,19 +103,19 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
                 pos_x = 40 + coluna * 52
                 pos_y = 40 + linha_ativa * 52
                 tela_jogo.blit(imagem_barco[parte], (pos_x, pos_y))
-                pygame.draw.rect(tela_jogo, "white", (pos_x, pos_y, 52, 52), 2)
+                pygame.draw.rect(tela_jogo, cor_texto, (pos_x, pos_y, 52, 52), 2)
 
     letras = "ABCDEFGHIJ"
     for indice in range(10):
-        texto_letra = fonte_pequena.render(letras[indice], True, "black")
+        texto_letra = fonte_pequena.render(letras[indice], True, cor_texto)
         tela_jogo.blit(texto_letra, (40 + indice * 52 + (52 - texto_letra.get_width()) // 2, 20)) 
-        texto_numero = fonte_pequena.render(str(indice + 1), True, "black")
+        texto_numero = fonte_pequena.render(str(indice + 1), True, cor_texto)
         tela_jogo.blit(texto_numero, (20, 40 + indice * 52 + (52 - texto_numero.get_height()) // 2)) 
 
 
 def desenhar_info(tela_jogo, fonte_grande, texto_info):
-    cor_fundo = "black"
-    cor_texto = "white"
+    cor_fundo = (9, 36, 59)
+    cor_texto = (224, 243, 247)
     pygame.draw.rect(tela_jogo, cor_fundo, (0, 600, 600, 80))
     texto_renderizado = fonte_grande.render(texto_info, True, cor_texto)
     tela_jogo.blit(texto_renderizado, (40, 600 + (80 - texto_renderizado.get_height()) // 2))

@@ -128,7 +128,7 @@ def main():
                     navios_colocados_player2 = 0
                     jogador_vencedor = 0
                     
-        tela_jogo.fill('darkgray')
+        tela_jogo.fill((8, 6, 20))
 
         if estado_jogo == "vitoria" and not som_vitoria_tocado:
             sons_jogo["trilha"].stop()
