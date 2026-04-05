@@ -49,12 +49,10 @@ def obter_parte_navio(tabuleiro, coluna, linha):
     if id_navio == 0:
         return 0
     
-    # Encontra a primeira coluna do navio
     primeira_coluna = coluna
     while primeira_coluna > 0 and tabuleiro[linha][primeira_coluna - 1] == id_navio:
         primeira_coluna -= 1
     
-    # Retorna qual parte é (1, 2 ou 3)
     return coluna - primeira_coluna + 1
 
 
