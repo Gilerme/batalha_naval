@@ -13,15 +13,18 @@ from interface_jogo import (
     criar_janela,
     desenhar_grade,
     desenhar_info,
-    mensagem,
     tocar_som,
-    tela_vitoria,
-    tela_inicial
+    tela_inicial,
+    trans_p2,
+    trans_batalha,
+    trans_2,
+    trans_1,
+    vitoria
 )
 
 
 def main():
-    tela_jogo, relogio_jogo, fonte_pequena, fonte_media, fonte_grande, sons_jogo = criar_janela()
+    tela_jogo, relogio_jogo, fonte_pequena, fonte_grande, sons_jogo = criar_janela()
 
     estado_jogo = "tela_inicial"
     tocar_som(sons_jogo, "trilha", -1)
@@ -125,7 +128,7 @@ def main():
                     navios_colocados_player2 = 0
                     jogador_vencedor = 0
                     
-        tela_jogo.fill('darkgray')
+        tela_jogo.fill((8, 6, 20))
 
         if estado_jogo == "vitoria" and not som_vitoria_tocado:
             sons_jogo["trilha"].stop()
@@ -135,7 +138,7 @@ def main():
             som_vitoria_tocado = True
 
         if estado_jogo == "tela_inicial":
-            tela_inicial(tela_jogo, fonte_media, fonte_grande)
+            tela_inicial(tela_jogo)
         
         elif estado_jogo == "setup1":
             celula = celula_do_mouse(mouse_x, mouse_y)
@@ -149,13 +152,10 @@ def main():
                     mensagem_info += " (Posição válida)"
                 else:
                     mensagem_info += " (Posição inválida)"
-            desenhar_info(tela_jogo, fonte_media, mensagem_info)
+            desenhar_info(tela_jogo, fonte_grande, mensagem_info)
 
         elif estado_jogo == "trans_p2":
-            titulo = "Jogador 1 está pronto!"
-            subtitulo = "Passe o computador para o Jogador 2"
-            texto_botao = "Continuar"
-            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao)
+            trans_p2(tela_jogo)
 
         elif estado_jogo == "setup2":
             celula = celula_do_mouse(mouse_x, mouse_y)
@@ -169,40 +169,31 @@ def main():
                     mensagem_info += " (Posição válida)"
                 else:
                     mensagem_info += " (Posição inválida)" 
-            desenhar_info(tela_jogo, fonte_media, mensagem_info)
+            desenhar_info(tela_jogo, fonte_grande, mensagem_info)
 
         elif estado_jogo == "trans_batalha":
-            titulo = "Batalha vai começar!"
-            subtitulo = "Jogador 1 ataca primeiro"
-            texto_botao = "Iniciar"
-            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao)
+            trans_batalha(tela_jogo)
 
         elif estado_jogo == "batalha1":
             desenhar_grade(tela_jogo, fonte_pequena, tabuleiro_player2, tiros_player1, True)
             navios_destruidos = contar_destruidos(tabuleiro_player2, tiros_player1)
             mensagem_info = f"Jogador 1 ataca! Navios destruidos: {navios_destruidos}/7"
-            desenhar_info(tela_jogo, fonte_media, mensagem_info)
+            desenhar_info(tela_jogo, fonte_grande, mensagem_info)
 
         elif estado_jogo == "trans_2":
-            titulo = "Água!"
-            subtitulo = "Vez do Jogador 2"
-            texto_botao = "Continuar"
-            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao)
+            trans_2(tela_jogo)
 
         elif estado_jogo == "batalha2":
             desenhar_grade(tela_jogo, fonte_pequena, tabuleiro_player1, tiros_player2, True)
             navios_destruidos = contar_destruidos(tabuleiro_player1, tiros_player2)
             mensagem_info = f"Jogador 2 ataca! Navios destruidos: {navios_destruidos}/7"
-            desenhar_info(tela_jogo, fonte_media, mensagem_info)
+            desenhar_info(tela_jogo, fonte_grande, mensagem_info)
 
         elif estado_jogo == "trans_1":
-            titulo = "Água!"
-            subtitulo = "Vez do Jogador 1"
-            texto_botao = "Continuar"
-            mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao)
+            trans_1(tela_jogo)
 
         elif estado_jogo == "vitoria":
-            tela_vitoria(tela_jogo, fonte_media, fonte_grande, jogador_vencedor)
+            vitoria(tela_jogo, jogador_vencedor)
 
         pygame.display.flip()
         relogio_jogo.tick(60)

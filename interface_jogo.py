@@ -7,10 +7,9 @@ def criar_janela():
     pygame.display.set_caption("Batalha Naval")
     relogio_jogo = pygame.time.Clock()
     fonte_pequena = pygame.font.SysFont(None, 20)
-    fonte_media = pygame.font.SysFont(None, 28)
-    fonte_grande = pygame.font.SysFont(None, 52)
+    fonte_grande = pygame.font.SysFont(None, 28)
     sons_jogo = carregar_sons()
-    return tela_jogo, relogio_jogo, fonte_pequena, fonte_media, fonte_grande, sons_jogo
+    return tela_jogo, relogio_jogo, fonte_pequena, fonte_grande, sons_jogo
 
 
 def carregar_sons():
@@ -50,22 +49,20 @@ def obter_parte_navio(tabuleiro, coluna, linha):
     if id_navio == 0:
         return 0
     
-    # Encontra a primeira coluna do navio
     primeira_coluna = coluna
     while primeira_coluna > 0 and tabuleiro[linha][primeira_coluna - 1] == id_navio:
         primeira_coluna -= 1
     
-    # Retorna qual parte é (1, 2 ou 3)
     return coluna - primeira_coluna + 1
 
 
 def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=False, celula_ativa=None):
-    cor_agua = "blue"
-    cor_navio = "green"
-    cor_acerto = "red"
-    cor_erro = "gray"
-    cor_borda = "black"
-    cor_texto = "white"
+    cor_agua = (9, 36, 59)
+    cor_navio = (253, 166, 0)
+    cor_acerto = (162, 26, 3)
+    cor_erro = (8, 6, 20)
+    cor_borda = (0, 0, 0)
+    cor_texto = (224, 243, 247)
     imagem_barco = {1: pygame.image.load("./imagens/barco_1.png").convert_alpha(),
                     2: pygame.image.load("./imagens/barco_2.png").convert_alpha(),
                     3: pygame.image.load("./imagens/barco_3.png").convert_alpha()}
@@ -104,52 +101,50 @@ def desenhar_grade(tela_jogo, fonte_pequena, tabuleiro, tiros_jogador, esconder=
                 pos_x = 40 + coluna * 52
                 pos_y = 40 + linha_ativa * 52
                 tela_jogo.blit(imagem_barco[parte], (pos_x, pos_y))
-                pygame.draw.rect(tela_jogo, "white", (pos_x, pos_y, 52, 52), 2)
+                pygame.draw.rect(tela_jogo, cor_texto, (pos_x, pos_y, 52, 52), 2)
 
     letras = "ABCDEFGHIJ"
     for indice in range(10):
-        texto_letra = fonte_pequena.render(letras[indice], True, "black")
+        texto_letra = fonte_pequena.render(letras[indice], True, cor_texto)
         tela_jogo.blit(texto_letra, (40 + indice * 52 + (52 - texto_letra.get_width()) // 2, 20)) 
-        texto_numero = fonte_pequena.render(str(indice + 1), True, "black")
+        texto_numero = fonte_pequena.render(str(indice + 1), True, cor_texto)
         tela_jogo.blit(texto_numero, (20, 40 + indice * 52 + (52 - texto_numero.get_height()) // 2)) 
 
 
-def desenhar_info(tela_jogo, fonte_media, texto_info):
-    cor_fundo = "black"
-    cor_texto = "white"
+def desenhar_info(tela_jogo, fonte_grande, texto_info):
+    cor_fundo = (9, 36, 59)
+    cor_texto = (224, 243, 247)
     pygame.draw.rect(tela_jogo, cor_fundo, (0, 600, 600, 80))
-    texto_renderizado = fonte_media.render(texto_info, True, cor_texto)
+    texto_renderizado = fonte_grande.render(texto_info, True, cor_texto)
     tela_jogo.blit(texto_renderizado, (40, 600 + (80 - texto_renderizado.get_height()) // 2))
 
 
-def botao(tela_jogo, fonte_media, texto_botao, pos_x, pos_y, largura=260, altura=52):
-    retangulo_botao = pygame.Rect(pos_x, pos_y, largura, altura)
-    pygame.draw.rect(tela_jogo, "black", retangulo_botao)
-    pygame.draw.rect(tela_jogo, "white", retangulo_botao, 2)
-    texto_renderizado = fonte_media.render(texto_botao, True, "white")
-    tela_jogo.blit(texto_renderizado, (pos_x + (largura - texto_renderizado.get_width()) // 2, pos_y + (altura - texto_renderizado.get_height()) // 2))
+def tela_inicial(tela_jogo):
+    imagem_tela_inicial = pygame.image.load("./imagens/inteiro/tela_inicial.png").convert()
+    imagem_tela_inicial = pygame.transform.scale(imagem_tela_inicial, (600, 680))
+    tela_jogo.blit(imagem_tela_inicial, (0, 0))
 
+def trans_p2(tela_jogo):
+    imagem_trans_p2 = pygame.image.load("./imagens/inteiro/trans_p2.jpeg").convert()
+    imagem_trans_p2 = pygame.transform.scale(imagem_trans_p2, (600, 680))
+    tela_jogo.blit(imagem_trans_p2, (0, 0))
 
-def mensagem(tela_jogo, fonte_media, fonte_grande, titulo, subtitulo, texto_botao):
-    tela_jogo.fill("black")
-    texto_titulo = fonte_grande.render(titulo, True, "white")
-    texto_subtitulo = fonte_media.render(subtitulo, True, "white")
-    tela_jogo.blit(texto_titulo, (300 - texto_titulo.get_width() // 2, 260))
-    tela_jogo.blit(texto_subtitulo, (300 - texto_subtitulo.get_width() // 2, 320))
-    botao(tela_jogo, fonte_media, texto_botao, 170, 380)
+def trans_batalha(tela_jogo):
+    imagem_trans_batalha = pygame.image.load("./imagens/inteiro/trans_batalha.jpeg").convert()
+    imagem_trans_batalha = pygame.transform.scale(imagem_trans_batalha, (600, 680))
+    tela_jogo.blit(imagem_trans_batalha, (0, 0))
 
+def trans_2(tela_jogo):
+    imagem_trans1 = pygame.image.load("./imagens/inteiro/trans_2.jpeg").convert()
+    imagem_trans1 = pygame.transform.scale(imagem_trans1, (600, 680))
+    tela_jogo.blit(imagem_trans1, (0, 0))
 
-def tela_vitoria(tela_jogo, fonte_media, fonte_grande, jogador_vencedor):
-    tela_jogo.fill("black")
-    texto_titulo = fonte_grande.render(f"Jogador {jogador_vencedor} venceu!", True, "white")
-    texto_subtitulo = fonte_media.render("Todos os navios do adversario foram destruidos!", True, "white")
-    tela_jogo.blit(texto_titulo, (300 - texto_titulo.get_width() // 2, 250))
-    tela_jogo.blit(texto_subtitulo, (300 - texto_subtitulo.get_width() // 2, 320))
-    botao(tela_jogo, fonte_media, "Jogar Novamente", 170, 390)
-    
+def trans_1(tela_jogo):
+    imagem_trans1 = pygame.image.load("./imagens/inteiro/trans_1.jpeg").convert()
+    imagem_trans1 = pygame.transform.scale(imagem_trans1, (600, 680))
+    tela_jogo.blit(imagem_trans1, (0, 0))
 
-def tela_inicial(tela_jogo, fonte_media, fonte_grande):
-    tela_jogo.fill("black")
-    texto_titulo = fonte_grande.render("Batalha Naval", True, "white")
-    tela_jogo.blit(texto_titulo, (300 - texto_titulo.get_width() // 2, 250))
-    botao(tela_jogo, fonte_media, "Iniciar Jogo", 170, 350)
+def vitoria(tela_jogo, jogador_vencedor):
+    imagem_vitoria = pygame.image.load(f"./imagens/inteiro/vitoria_{jogador_vencedor}.jpeg").convert()
+    imagem_vitoria = pygame.transform.scale(imagem_vitoria, (600, 680))
+    tela_jogo.blit(imagem_vitoria, (0, 0))
