@@ -40,15 +40,15 @@ python batalha_naval.py
 
 ## Controles
 
-- Mouse (botão esquerdo) para interagir
+- Mouse (botao esquerdo) para avancar telas, posicionar navios e atacar
 
 ## Estrutura do projeto
 
 ```text
 batalha_naval/
-├── batalha_naval.py   # Loop principal e máquina de estados
-├── logica_jogo.py     # Regras e operações do tabuleiro
-├── interface_jogo.py  # Renderização, telas, imagens e sons
+├── batalha_naval.py
+├── interface_jogo.py
+├── logica_jogo.py
 ├── README.md
 ├── imagens/
 │   ├── barco_1.png
@@ -57,7 +57,16 @@ batalha_naval/
 │   ├── barco_destruido_1.png
 │   ├── barco_destruido_2.png
 │   ├── barco_destruido_3.png
-│   └── inteiro/       # Sprites alternativos (não usados no fluxo atual)
+│   └── inteiro/
+│       ├── barco.png
+│       ├── barco_destruido.png
+│       ├── tela_inicial.png
+│       ├── trans_1.jpeg
+│       ├── trans_2.jpeg
+│       ├── trans_batalha.jpeg
+│       ├── trans_p2.jpeg
+│       ├── vitoria_1.jpeg
+│       └── vitoria_2.jpeg
 └── sons/
     ├── acertou.mp3
     ├── agua.mp3
@@ -92,7 +101,7 @@ Estado da partida controlado por `estado_jogo` com os valores:
 - `trans_1`
 - `vitoria`
 
-Fluxo principal de combate:
+Fluxo de turno em batalha:
 
 ```text
 batalha1
@@ -104,35 +113,33 @@ batalha2
   erro   -> trans_1 -> batalha1
 ```
 
-Quando há vitória, a tela final é exibida e, ao continuar, o jogo volta para `tela_inicial` com os tabuleiros resetados
+Quando há vitória, a tela final é exibida e, ao continuar, o jogo volta para `tela_inicial` com variáveis iniciais resetadas
 
 ### logica_jogo.py
 
 Funções principais:
 
-- `novo_tabuleiro()`: cria matriz 10x10 com água (`0`)
-- `celula_do_mouse(x, y)`: converte pixel para `(coluna, linha)` com base em origem `(40, 40)` e célula de `52x52`
-- `pode_colocar(tabuleiro, coluna, linha)`: valida encaixe horizontal de 3 células livres
-- `coloca_navio(tabuleiro, coluna, linha, id_navio)`: grava o ID do navio em 3 células
-- `aplicar_tiro(...)`: registra água (`False`) ou destrói navio inteiro por ID (`True`)
-- `todos_destruidos(...)`: detecta fim de jogo
-- `contar_destruidos(...)`: conta navios destruídos por IDs únicos atingidos
+- `novo_tabuleiro()`: cria matriz 10x10 preenchida com `0`
+- `celula_do_mouse(mouse_x, mouse_y)`: converte coordenadas da tela para `(coluna, linha)`
+- `pode_colocar(tabuleiro, coluna, linha)`: valida navio horizontal de 3 casas
+- `coloca_navio(tabuleiro, coluna, linha, id_navio)`: grava o ID do navio em 3 casas
+- `aplicar_tiro(tabuleiro, tiros_jogador, coluna, linha)`: retorna `True` em acerto e `False` em agua; no acerto, registra as 3 partes do navio
+- `todos_destruidos(tabuleiro, tiros_jogador)`: verifica condição de vitoria
+- `contar_destruidos(tabuleiro, tiros_jogador)`: conta navios destruidos por IDs
 
 ### interface_jogo.py
 
-Responsável por:
+Responsavel por janela, desenhos e audio.
 
-- criar janela, relógio e fontes
-- carregar sons
-- desenhar grade, telas e mensagens
-- desenhar navios inteiros/destruídos
-- tocar efeitos e trilhas
-
-`criar_janela()` retorna:
+- `criar_janela()` Inicializa o pygame e retorna:
 
 ```python
-(tela_jogo, relogio_jogo, fonte_pequena, fonte_media, fonte_grande, sons_jogo)
+(tela_jogo, relogio_jogo, fonte_pequena, fonte_grande, sons_jogo)
 ```
+
+- Carrega os sons: `acerto`, `erro`, `trilha`, `guerra`, `mar`, `colocou`, `vitoria`
+- Desenha grade, navios, impactos e informacoes de status
+- Exibe telas de transicao e vitoria usando imagens em `imagens/inteiro/`
 
 ## Modelo de dados
 
@@ -163,13 +170,6 @@ tabuleiro = [
 - Área do tabuleiro: `600x600`
 - Barra de informação inferior: `600x80`
 - Célula: `52x52`, com margem de `40px`
-
-Cores principais:
-
-- Azul: água não atingida
-- Verde: navio visível intacto
-- Vermelho: acerto
-- Cinza: erro na água
 
 Sons carregados por chave:
 
